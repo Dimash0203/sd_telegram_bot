@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title or "DB Front" }}</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Arial;margin:0;background:#0b0e12;color:#e9eef7}
+    a{color:#8ab4ff;text-decoration:none}
+    .wrap{max-width:1200px;margin:0 auto;padding:20px}
+    .top{display:flex;gap:14px;align-items:center;justify-content:space-between}
+    .card{background:#121824;border:1px solid #1c2636;border-radius:12px;padding:14px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{border-bottom:1px solid #1c2636;padding:8px;vertical-align:top}
+    th{position:sticky;top:0;background:#121824}
+    .muted{color:#a8b3c7}
+    .btn{background:#1a2540;border:1px solid #2a3a62;color:#e9eef7;border-radius:10px;padding:6px 10px;cursor:pointer}
+    .btn.d{background:#3a1a1a;border-color:#5a2a2a}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a3a62;background:#121824}
+    input,select{background:#0f1520;border:1px solid #2a3a62;color:#e9eef7;border-radius:10px;padding:6px 8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="row">
+        <a class="pill" href="/">🏠 Главная</a>
+        <a class="pill" href="/table/tickets_current">tickets_current</a>
+        <a class="pill" href="/table/tickets_done">tickets_done</a>
+        <a class="pill" href="/table/telegram_users">telegram_users</a>
+        <a class="pill" href="/table/sessions">sessions</a>
+        <a class="pill" href="/table/app_kv">app_kv</a>
+      </div>
+      <form method="post" action="/db/vacuum">
+        <button class="btn" type="submit">VACUUM</button>
+      </form>
+    </div>
+    <div style="height:16px"></div>
+    {% block body %}{% endblock %}
+  </div>
+</body>
+</html>

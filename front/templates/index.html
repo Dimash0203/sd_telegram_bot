@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+  <div class="card">
+    <div class="row">
+      <div><b>SQLite:</b> <span class="muted">{{ request.app }}</span></div>
+    </div>
+  </div>
+
+  <div style="height:12px"></div>
+
+  <div class="grid">
+    {% for t in tables %}
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <div><b>{{ t.name }}</b></div>
+          <div class="muted">{{ t.count }} rows</div>
+        </div>
+        <div style="height:10px"></div>
+        <a class="btn" href="/table/{{ t.name }}">Открыть</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

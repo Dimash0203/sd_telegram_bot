@@ -1,0 +1,99 @@
+# =========================
+# OS junk
+# =========================
+*~
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# =========================
+# IDEs
+# =========================
+.idea/
+*.iws
+out/
+cmake-build-*/
+
+# =========================
+# Python cache/build
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.pyre/
+coverage.xml
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+*.egg-info/
+.eggs/
+.wheels/
+pip-log.txt
+
+# =========================
+# Environments
+# =========================
+.env
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# =========================
+# Logs / runtime
+# =========================
+*.log
+
+# =========================
+# Project-specific: local DB + data
+# =========================
+data/
+!data/.gitkeep
+
+# If you prefer only DB ignored but keep other data files, use this instead of `data/`:
+# data/*.sqlite3
+# data/*.db
+# data/*-wal
+# data/*-shm
+# data/*-journal
+
+# Explicitly ignore bot sqlite regardless of location/name
+**/bot.sqlite3
+**/bot.sqlite3-*
+**/*.sqlite3
+**/*.sqlite3-journal
+
+# =========================
+# Tests cache (optional)
+# =========================
+tests/__pycache__/

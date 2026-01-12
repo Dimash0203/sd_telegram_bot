@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block body %}
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <div><b>tickets_done</b> <span class="muted">· {{ total }} rows · page {{ page }}/{{ pages }}</span></div>
+      <div class="row">
+        <form method="get" action="/table/tickets_done">
+          <input type="hidden" name="page" value="1">
+          <input type="hidden" name="page_size" value="{{ page_size }}">
+          <select name="order_by">
+            {% for c in cols %}
+              <option value="{{ c }}" {% if c==order_by %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+          <select name="desc">
+            <option value="1" {% if desc==1 %}selected{% endif %}>DESC</option>
+            <option value="0" {% if desc==0 %}selected{% endif %}>ASC</option>
+          </select>
+          <button class="btn" type="submit">Сортировать</button>
+        </form>
+      </div>
+    </div>
+
+    <div style="height:10px"></div>
+
+    <form method="post" action="/table/clear" class="row">
+      <input type="hidden" name="table" value="tickets_done">
+      <input name="confirm" placeholder="Введите tickets_done">
+      <label class="muted"><input type="checkbox" name="do_vacuum" value="1"> VACUUM после</label>
+      <button class="btn d" type="submit">Очистить</button>
+    </form>
+  </div>
+
+  <div style="height:12px"></div>
+
+  <div class="card" style="overflow:auto">
+    <table>
+      <thead>
+        <tr>
+          {% for c in cols %}<th>{{ c }}</th>{% endfor %}
+          <th>status</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for r in rows %}
+        <tr>
+          {% for c in cols %}
+            <td>{{ r.get(c) }}</td>
+          {% endfor %}
+
+          <td>
+            <form method="post" action="/tickets/status" class="row">
+              <input type="hidden" name="table" value="tickets_done">
+              <input type="hidden" name="telegram_user_id" value="{{ r.get('telegram_user_id') }}">
+              <input type="hidden" name="ticket_id" value="{{ r.get('ticket_id') }}">
+              <select name="status">
+                {% for s in statuses %}
+                  <option value="{{ s }}" {% if (r.get('status') or '')|upper == s %}selected{% endif %}>
+                    {{ s }} · {{ status_ru(s) }}
+                  </option>
+                {% endfor %}
+              </select>
+              <button class="btn" type="submit">OK</button>
+            </form>
+          </td>
+
+          <td class="row">
+            <form method="post" action="/row/delete">
+              <input type="hidden" name="table" value="tickets_done">
+              <input type="hidden" name="pk_json" value='{{ {"telegram_user_id": r.get("telegram_user_id"), "ticket_id": r.get("ticket_id")} | tojson }}'>
+              <button class="btn d" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div style="height:12px"></div>
+
+  <div class="row">
+    {% if page > 1 %}
+      <a class="btn" href="/table/tickets_done?page={{ page-1 }}&page_size={{ page_size }}&order_by={{ order_by }}&desc={{ desc }}">← Назад</a>
+    {% endif %}
+    {% if page < pages %}
+      <a class="btn" href="/table/tickets_done?page={{ page+1 }}&page_size={{ page_size }}&order_by={{ order_by }}&desc={{ desc }}">Вперёд →</a>
+    {% endif %}
+  </div>
+{% endblock %}
